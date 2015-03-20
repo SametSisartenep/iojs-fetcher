@@ -6,18 +6,22 @@ io.js version fetcher. As simple as it sounds.
 
 Be sure you have [**node.js**](https://nodejs.org) or
 [**io.js**](https://iojs.org) installed:
-    node -v
+
+`$ node -v`
 
 And [**wget**](https://www.gnu.org/software/wget/):
-    wget --version
+
+`$ wget --version`
 
 ## Usage
 
 Clone the git repo:
-    git clone https://github.com/SametSisartenep/iojs-fetcher.git
+
+`git clone https://github.com/SametSisartenep/iojs-fetcher.git`
 
 And execute it as shown below:
-    ./iojs-fetcher [VERSION]
+
+`./iojs-fetcher [VERSION]`
 
 Being _VERSION_ any **semver** version string.
 
