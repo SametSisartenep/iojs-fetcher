@@ -14,6 +14,13 @@ print_not_installed () {
   exit 1
 }
 
+download_it () {
+  echo -e "\x1b[1;37mSelected version:\x1b[0m \x1b[0;32m${release}\x1b[0m"
+  url="https://github.com/iojs/io.js/archive/v${release}.tar.gz"
+  echo -e "\x1b[1;37mDowloading: \x1b[0;34m$url\x1b[0m"
+  wget $url
+}
+
 for program in ${programs[@]}
 do
   if type $program &>/dev/null; then
@@ -41,11 +48,21 @@ else
 fi
 
 if [ $release ]; then
-  echo -e "\x1b[1;37mSelected version:\x1b[0m \x1b[0;32m${release}\x1b[0m"
-  url="https://github.com/iojs/io.js/archive/v${release}.tar.gz"
-  echo -e "\x1b[1;37mDowloading: \x1b[0;34m$url\x1b[0m"
-  wget $url
+  download_it
 else
   echo -e "\x1b[1;31mNo version specified.\x1b[0m"
-  exit 1
+  echo "Do you want to fetch the latest version?"
+  read option
+
+  case $option in
+    "yes"|"y"|"Y")
+      versions=`curl https://api.github.com/repos/iojs/io.js/tags`
+      release=`${nodejs} -e "console.log((${versions})[0].name.match(/[0-9][.][0-9][.][0-9]/g)[0])"`
+      download_it
+      ;;
+    *)
+      echo "Bye :)"
+      exit 1
+      ;;
+  esac
 fi
