@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+release=$1
+
+if [[ $release =~ ^[0-9][.][0-9][.][0-9]$ ]];then
+  true
+else
+  release=`node -e "console.log('${release}'.match(/[0-9][.][0-9][.][0-9]/g)[0]);"`
+fi
+
+echo -e "\x1b[1;37mSelected version:\x1b[0m \x1b[0;32m${release}\x1b[0m"
+
+url="https://github.com/iojs/io.js/archive/v${release}.tar.gz"
+
+wget $url
