@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+if [ $1 == "versions" ]; then
+  versions=`curl -s https://api.github.com/repos/iojs/io.js/tags`
+  node -e "${versions}.map(function(version){console.log(version.name);});"
+  exit 0
+fi
+
 release=$1
 
 nodejs='node'
@@ -56,13 +62,13 @@ else
 
   case $option in
     "yes"|"y"|"Y")
-      versions=`curl https://api.github.com/repos/iojs/io.js/tags`
+      versions=`curl -s https://api.github.com/repos/iojs/io.js/tags`
       release=`${nodejs} -e "console.log((${versions})[0].name.match(/[0-9][.][0-9][.][0-9]/g)[0])"`
       download_it
       ;;
     *)
       echo "Bye :)"
-      exit 1
+      exit 0
       ;;
   esac
 fi

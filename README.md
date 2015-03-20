@@ -9,21 +9,33 @@ Be sure you have [**node.js**](https://nodejs.org) or
 
 `$ node -v`
 
-And [**wget**](https://www.gnu.org/software/wget/):
+...[**wget**](https://www.gnu.org/software/wget/):
 
 `$ wget --version`
+
+and [**curl**](http://curl.haxx.se/):
+
+`$ curl --version`
 
 ## Usage
 
 Clone the git repo:
 
-`git clone https://github.com/SametSisartenep/iojs-fetcher.git`
+`$ git clone https://github.com/SametSisartenep/iojs-fetcher.git`
 
 And execute it as shown below:
 
-`./iojs-fetcher [VERSION]`
+`$ ./iojs-fetcher [VERSION]`
 
-Being _VERSION_ any **semver** version string.
+Being _VERSION_ any **semver** version string. e.g: 1.6.1, v1.2.0,
+1.0.0-release, etc
+
+### Checkout versions
+
+If you want to list all available versions, just type **versions** instead of a
+number in the _VERSION_ field. e.g:
+
+`$ ./iojs-fetcher versions`
 
 ## LICENSE
 The MIT License (MIT)
