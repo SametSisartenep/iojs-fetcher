@@ -2,14 +2,50 @@
 
 release=$1
 
+nodejs='node'
+programs=( node wget )
+
+print_installed () {
+  echo -e "\x1b[1;36m$program\x1b[0m \x1b[0;32m✓ - installed\x1b[0m"
+}
+
+print_not_installed () {
+  echo -e "\x1b[1;36m$program\x1b[0m \x1b[0;31m✘ - not installed\x1b[0m"
+  exit 1
+}
+
+for program in ${programs[@]}
+do
+  if type $program &>/dev/null; then
+    print_installed
+  else
+    if [ $program == "node" ]; then
+      if type iojs &>/dev/null; then
+        print_installed
+        nodejs='iojs'
+      else
+        print_not_installed
+      fi
+    else
+      print_not_installed
+    fi
+  fi
+done
+
 if [[ $release =~ ^[0-9][.][0-9][.][0-9]$ ]];then
   true
 else
-  release=`node -e "console.log('${release}'.match(/[0-9][.][0-9][.][0-9]/g)[0]);"`
+  if [ $release ]; then
+    release=`${nodejs} -e "console.log('${release}'.match(/[0-9][.][0-9][.][0-9]/g)[0]);"`
+  fi
 fi
 
-echo -e "\x1b[1;37mSelected version:\x1b[0m \x1b[0;32m${release}\x1b[0m"
-
-url="https://github.com/iojs/io.js/archive/v${release}.tar.gz"
-
-wget $url
+if [ $release ]; then
+  echo -e "\x1b[1;37mSelected version:\x1b[0m \x1b[0;32m${release}\x1b[0m"
+  url="https://github.com/iojs/io.js/archive/v${release}.tar.gz"
+  echo -e "\x1b[1;37mDowloading: \x1b[0;34m$url\x1b[0m"
+  wget $url
+else
+  echo -e "\x1b[1;31mNo version specified.\x1b[0m"
+  exit 1
+fi
