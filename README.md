@@ -37,6 +37,22 @@ number in the _VERSION_ field. e.g:
 
 `$ ./iojs-fetcher versions`
 
+## System-wide installation
+
+You can install this tool in your system by using `make`.
+There are **2** options.
+
+1. _**original**_ (installs the whole file):
+  - `$ make original`
+2. _**symbolic**_ (installs a symbolic link to the file):
+  - `$ make symbolic`
+3. Default (`make`s a symbolic installation):
+  - `$ make`
+
+## Uninstall
+
+If you want to delete it from your system, just `make clean` it! :)
+
 ## LICENSE
 The MIT License (MIT)
 
