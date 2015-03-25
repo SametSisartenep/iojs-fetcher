@@ -1,5 +1,4 @@
 PWD:=$(abspath .)
-.PHONY=clean
 
 all: symbolic
 
@@ -9,5 +8,6 @@ original: iojs-fetcher
 symbolic: iojs-fetcher
 	ln -s $(PWD)/$< /usr/local/bin/$<
 
+.PHONY: clean
 clean:
 	rm -rfv /usr/local/bin/iojs-fetcher
