@@ -1,6 +1,6 @@
 # IOJS FETCHER
 
-io.js version fetcher. As simple as it sounds.
+{node,io}.js version fetcher. As simple as it sounds.
 
 ## Prerequisites
 
