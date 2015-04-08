@@ -4,10 +4,9 @@ io.js version fetcher. As simple as it sounds.
 
 ## Prerequisites
 
-Be sure you have [**node.js**](https://nodejs.org) or
-[**io.js**](https://iojs.org) installed:
+Be sure you have [**python**](https://www.python.org/) installed:
 
-`$ node -v`
+`$ python --version`
 
 ...[**wget**](https://www.gnu.org/software/wget/):
 
@@ -25,9 +24,9 @@ Clone the git repo:
 
 And execute it as shown below:
 
-`$ ./iojs-fetcher [VERSION]`
+`$ ./node-fetcher [TYPE] [VERSION]`
 
-Being _VERSION_ any **semver** version string. e.g: 1.6.1, v1.2.0,
+Being _TYPE_ either **node.js** or **io.js** and  _VERSION_ any **semver** version string. e.g: 1.6.1, v1.2.0,
 1.0.0-release, etc
 
 ### Checkout versions
@@ -35,7 +34,7 @@ Being _VERSION_ any **semver** version string. e.g: 1.6.1, v1.2.0,
 If you want to list all available versions, just type **versions** instead of a
 number in the _VERSION_ field. e.g:
 
-`$ ./iojs-fetcher versions`
+`$ ./node-fetcher [TYPE] versions`
 
 ## System-wide installation
 

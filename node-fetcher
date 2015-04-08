@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+
+print_installed () {
+  echo -e "\x1b[1;36m$1\x1b[0m \x1b[0;32m✓ - installed\x1b[0m"
+}
+
+print_not_installed () {
+  echo -e "\x1b[1;36m$1\x1b[0m \x1b[0;31m✘ - not installed\x1b[0m"
+  exit 1
+}
+
+check_dependencies () {
+  programs=( python wget curl )
+  for program in ${programs[@]}
+  do
+    if type $program &>/dev/null; then
+      print_installed $program
+    else
+      print_not_installed $program
+    fi
+  done
+}
+
+download_it () {
+  echo -e "\x1b[1;37mSelected version:\x1b[0m \x1b[0;32m${1}\x1b[0m"
+  url="https://github.com/${2}/archive/v${1}.tar.gz"
+  echo -e "\x1b[1;37mDowloading: \x1b[0;34m${url}\x1b[0m"
+  wget $url
+}
+
+usage () {
+  echo -e "~ $ node-fetcher TYPE VERSION\n\n   options:"
+  echo "     TYPE: node.js or io.js"
+  echo "     VERSION: a semver version or the word 'versions',"
+  echo -e "              to see all available versions\n\n   examples:"
+  echo "   $ node-fetcher node v0.12.2"
+  echo "   $ node-fetcher iojs versions"
+  echo "   $ node-fetcher io.js v1.6.4"
+  exit 0
+}
+
+check_dependencies
+
+case $1 in
+  "io"|"iojs"|"io.js")
+    repo='iojs/io.js'
+    index=0
+    ;;
+  "node"|"nodejs"|"node.js")
+    repo='joyent/node'
+    index=1
+    ;;
+  *)
+    usage
+    exit 0
+    ;;
+esac
+
+if [[ $2 == "versions" ]]; then
+  versions=`curl -s https://api.github.com/repos/${repo}/tags`
+  python -c "for version in ${versions}: print version['name']"
+  exit 0
+else
+  release="'$2'"
+fi
+
+if [ $release -a $release != "''" ]; then
+  if [[ $release =~ ^[0-9][.][0-9]{1,2}[.][0-9]$ ]]; then
+    download_it $release $repo
+  else
+    release=`python -c "import re;print re.search(r'[0-9][.][0-9]{1,2}[.][0-9]',${release},re.I).group()"`
+    download_it $release $repo
+  fi
+else
+  echo -e "\x1b[1;31mNo version specified.\x1b[0m"
+  echo -e "Do you want to fetch the \x1b[1;35mlatest\x1b[0m version? [y/n]"
+  read option
+
+  case $option in
+    "yes"|"y"|"Y")
+      versions=`curl -s https://api.github.com/repos/${repo}/tags`
+      release=`python -c "import re;print re.search(r'[0-9][.][0-9]{1,2}[.][0-9]',${versions}[${index}]['name'],re.I).group()"`
+      download_it $release $repo
+      ;;
+    *)
+      echo "Bye :)"
+      exit 0
+      ;;
+  esac
+fi
