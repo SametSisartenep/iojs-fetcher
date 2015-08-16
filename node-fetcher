@@ -43,7 +43,7 @@ check_dependencies
 
 case $1 in
   "io"|"iojs"|"io.js")
-    repo='nodejs/io.js'
+    repo='nodejs/node'
     index=0
     ;;
   "node"|"nodejs"|"node.js")
