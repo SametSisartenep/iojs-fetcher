@@ -2,6 +2,14 @@
 
 {node,io}.js version fetcher. As simple as it sounds.
 
+### Update
+
+I'm working on a **full python** implementation
+[here](https://github.com/SametSisartenep/iojs-fetcher/tree/full-python).
+The _bash + curl_ version is going to be replaced by this one once finished.
+
+> **Current Status**: Alpha
+
 ## Prerequisites
 
 Be sure you have [**python**](https://www.python.org/) and [**curl**](http://curl.haxx.se/) installed:
