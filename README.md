@@ -4,15 +4,9 @@
 
 ## Prerequisites
 
-Be sure you have [**python**](https://www.python.org/) installed:
+Be sure you have [**python**](https://www.python.org/) and [**curl**](http://curl.haxx.se/) installed:
 
 `$ python --version`
-
-...[**wget**](https://www.gnu.org/software/wget/):
-
-`$ wget --version`
-
-and [**curl**](http://curl.haxx.se/):
 
 `$ curl --version`
 
@@ -53,6 +47,4 @@ There are **2** options.
 If you want to delete it from your system, just `make clean` it! :)
 
 ## LICENSE
-The MIT License (MIT)
-
-Copyright (c) 2015 Rodrigo González López
+[![License](http://img.shields.io/badge/license-BSD3-brightgreen.svg)](http://opensource.org/licenses/BSD-3-Clause)
