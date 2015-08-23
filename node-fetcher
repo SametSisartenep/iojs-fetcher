@@ -10,7 +10,7 @@ print_not_installed () {
 }
 
 check_dependencies () {
-  programs=( python wget curl )
+  programs=( python curl )
   for program in ${programs[@]}
   do
     if type $program &>/dev/null; then
@@ -25,7 +25,7 @@ download_it () {
   echo -e "\x1b[1;37mSelected version:\x1b[0m \x1b[0;32m${1}\x1b[0m"
   url="https://github.com/${2}/archive/v${1}.tar.gz"
   echo -e "\x1b[1;37mDowloading: \x1b[0;34m${url}\x1b[0m"
-  wget $url
+  curl -O -L $url
 }
 
 usage () {
@@ -65,10 +65,10 @@ else
 fi
 
 if [ $release -a $release != "''" ]; then
-  if [[ $release =~ ^[0-9][.][0-9]{1,2}[.][0-9]$ ]]; then
+  if [[ $release =~ ^[0-9][.][0-9]{1,2}[.][0-9]{1,2}$ ]]; then
     download_it $release $repo
   else
-    release=`python -c "import re;print re.search(r'[0-9][.][0-9]{1,2}[.][0-9]',${release},re.I).group()"`
+    release=`python -c "import re;print re.search(r'[0-9][.][0-9]{1,2}[.][0-9]{1,2}',${release},re.I).group()"`
     download_it $release $repo
   fi
 else
@@ -79,7 +79,7 @@ else
   case $option in
     "yes"|"y"|"Y")
       versions=`curl -s https://api.github.com/repos/${repo}/tags`
-      release=`python -c "import re;print re.search(r'[0-9][.][0-9]{1,2}[.][0-9]',${versions}[${index}]['name'],re.I).group()"`
+      release=`python -c "import re;print re.search(r'[0-9][.][0-9]{1,2}[.][0-9]{1,2}',${versions}[${index}]['name'],re.I).group()"`
       download_it $release $repo
       ;;
     *)
