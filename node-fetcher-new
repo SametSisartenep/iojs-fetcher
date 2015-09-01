@@ -1,0 +1,70 @@
+#!/usr/bin/env python
+
+import urllib2, sys, json
+
+def getVersions (platform):
+    data = urllib2.urlopen(getUrl(platform))
+    versions = data.read()
+    return json.loads(versions)
+
+def printVersions (platform):
+    for version in getVersions(platform):
+        print version['name']
+
+def getRepo (platform):
+    return {
+            "iojs": "nodejs/node/",
+            "io.js": "nodejs/node/",
+            "io": "nodejs/node/",
+            "nodejs": "joyent/node/",
+            "node.js": "joyent/node/",
+            "node": "joyent/node/",
+            }.get(platform, "nodejs/node/")
+
+def getUrl (platform, version=None):
+    if not version:
+        url = "https://api.github.com/repos/"
+        url += getRepo(platform)
+        url += "tags"
+        return url
+    else:
+        url = "https://github.com/"
+        url += getRepo(platform)
+        url += "archive/" + version + ".tar.gz"
+        return url
+
+def downloadIt (platform, version):
+    url = getUrl(platform, version)
+    fileName = url.split('/')[-1]
+    dlFile = open(fileName, 'wb')
+    dlUrl = urllib2.urlopen(url)
+    meta = dlUrl.info()
+    fileSize = int(meta.getheaders("Content-Length")[0])
+
+    print "Downloading: %s Bytes: %s" % (fileName, fileSize)
+
+    dlFileSize = 0
+    blockSize = 8192
+
+    while True:
+        buf = dlUrl.read(blockSize)
+        if not buf:
+            print "\x1b[1;32mFinished!\x1b[0m"
+            break
+
+        dlFileSize += len(buf)
+        dlFile.write(buf)
+        percentage = dlFileSize * 100. / fileSize
+        status = r"%10d [%3.2f%%]" % (dlFileSize, percentage)
+        status += chr(8) * (len(status)+1)
+        print status,
+
+    dlFile.close()
+
+argPlatform = sys.argv[1]
+argOption = sys.argv[2]
+
+if argOption == "versions":
+    printVersions(argPlatform)
+else:
+    downloadIt(argPlatform, argOption)
