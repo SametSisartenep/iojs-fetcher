@@ -61,10 +61,12 @@ def downloadIt (platform, version):
 
     dlFile.close()
 
-argPlatform = sys.argv[1]
-argOption = sys.argv[2]
+if __name__ == "__main__":
 
-if argOption == "versions":
-    printVersions(argPlatform)
-else:
-    downloadIt(argPlatform, argOption)
+    argPlatform = sys.argv[1]
+    argOption = sys.argv[2]
+
+    if argOption == "versions":
+        printVersions(argPlatform)
+    else:
+        downloadIt(argPlatform, argOption)
