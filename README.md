@@ -2,13 +2,24 @@
 
 {node,io}.js version fetcher. As simple as it sounds.
 
-### Update
+## Update [09-12-2015]
+
+This project is **deprecated** due to changes in the Node.js project during
+the last months. At the moment, __io.js__ and the main __Node__ project have
+converged in **Node**, so this tool is useless (You could use a curl
+script and get the tarball in no time).
+
+If you're reading this, thank you and have a nice day!
+
+> -- Rodrigo González López
+
+### Python implementation
 
 I'm working on a **full python** implementation
 [here](https://github.com/SametSisartenep/iojs-fetcher/tree/full-python).
 The _bash + curl_ version is going to be replaced by this one once finished.
 
-> **Current Status**: Alpha
+> **Current Status**: Beta
 
 ## Prerequisites
 
